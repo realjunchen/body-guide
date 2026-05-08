@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>把體態變成你的資產 — Jun Chen</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --mid: #1a1a1a;
+    --light-mid: #2a2a2a;
+    --white: #f0ede8;
+    --gold: #c9a84c;
+    --muted: #888880;
+    --accent: #d4c49a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0d0d0d 0%, #1a1208 50%, #0a0a0a 100%);
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 40%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 70% 70%, rgba(201,168,76,0.04) 0%, transparent 70%);
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.5) 60%, transparent 100%);
+  }
+
+  .cover-tag {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .cover-title {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 900;
+    font-size: clamp(36px, 8vw, 72px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .cover-title span {
+    color: var(--gold);
+  }
+
+  .cover-sub {
+    font-size: clamp(14px, 3vw, 17px);
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 500px;
+    position: relative;
+  }
+
+  .cover-line {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 40px;
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .section-num {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-num::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 6vw, 48px);
+    line-height: 1.25;
+    margin-bottom: 48px;
+    letter-spacing: -0.01em;
+  }
+
+  .body-text {
+    font-size: clamp(15px, 2.5vw, 17px);
+    line-height: 2.1;
+    color: rgba(240,237,232,0.82);
+  }
+
+  .body-text p {
+    margin-bottom: 28px;
+  }
+
+  .body-text strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .body-text .highlight {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ── QUOTE BLOCK ── */
+  .quote-block {
+    border-left: 2px solid var(--gold);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: rgba(201,168,76,0.04);
+  }
+
+  .quote-block p {
+    font-size: clamp(16px, 3vw, 20px);
+    line-height: 1.9;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  /* ── STATS ROW ── */
+  .stats {
+    display: flex;
+    gap: 40px;
+    margin: 48px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .stat-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    margin: 48px 0;
+  }
+
+  .flow-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .flow-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 44px;
+    width: 1px;
+    height: calc(100% - 12px);
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .flow-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: rgba(201,168,76,0.05);
+  }
+
+  .flow-content {
+    padding: 4px 0 40px 0;
+  }
+
+  .flow-title {
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .flow-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── PRODUCT CARD ── */
+  .product-card {
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 32px;
+    margin: 32px 0;
+    position: relative;
+    background: rgba(201,168,76,0.03);
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .product-card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+
+  .product-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .product-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+    color: rgba(240,237,232,0.75);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .product-list li:last-child { border-bottom: none; }
+
+  .product-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0;
+  }
+
+  /* ── GUARANTEE ── */
+  .guarantee {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 32px;
+    margin: 40px 0;
+  }
+
+  .guarantee-title {
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .guarantee-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .guarantee-list li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: rgba(240,237,232,0.8);
+    display: flex;
+    gap: 12px;
+  }
+
+  .guarantee-list li::before {
+    content: '✓';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent);
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 40px;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 900;
+    margin-bottom: 24px;
+    line-height: 1.3;
+  }
+
+  .cta-sub {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 48px;
+  }
+
+  .cta-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .cta-card {
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 32px;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .cta-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  .cta-card-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .cta-card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .cta-card-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .cta-card-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 20px;
+    transition: transform 0.3s;
+  }
+
+  .cta-card:hover .cta-card-arrow {
+    transform: translateY(-50%) translateX(4px);
+  }
+
+  .cta-note {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  /* ── BACKGROUND SECTION VARIANTS ── */
+  .section-dark {
+    background: var(--dark);
+  }
+
+  .section-mid {
+    background: var(--mid);
+  }
+
+  .full-width { max-width: none !important; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .cover, .section, .cta-section { padding-left: 28px; padding-right: 28px; }
+    .stats { gap: 24px; }
+    .cta-card-arrow { display: none; }
+  }
+
+  /* ── FADE IN ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ COVER ══════════════════════════════ -->
+<section class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-tag">Jun Chen · 體態 × 事業路徑指南</div>
+  <div class="cover-line"></div>
+  <h1 class="cover-title">
+    把體態變成<br><span>你的資產</span>
+  </h1>
+  <p class="cover-sub">
+    一套讓你的身體狀態、生活方式與事業收入<br>
+    同時往上走的路徑——從第一步到真正改變
+  </p>
+</section>
+
+<!-- ══════════════════════════════ 01 關於我 ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="section fade-in">
+  <div class="section-num">01 &nbsp; 關於我</div>
+  <h2 class="section-title">Hi，我是 Jun。</h2>
+  <div class="body-text">
+    <p>今年 44 歲。單親爸爸。<br>沒有特殊的背景，也沒有天生好體質。</p>
+    <p>最重的時候 <strong>96 公斤</strong>。那不是因為我懶——是因為那時候的我被生活壓住了。薪水、焦慮、家庭、負債，每一件事都比身體更緊急。</p>
+    <p>我以為更努力就能解決一切。<br>直到我發現——<strong>拼體力永遠贏不過每天 24 小時</strong>，也換不回陪孩子長大的時間。那一刻我才開始真正找另一條路。</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">96<span style="font-size:0.5em;color:var(--muted)">kg</span></div>
+      <div class="stat-label">最重時的體重</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">76<span style="font-size:0.5em;color:var(--muted)">kg</span></div>
+      <div class="stat-label">現在維持</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10<span style="font-size:0.5em;color:var(--muted)">年</span></div>
+      <div class="stat-label">持續使用產品</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>我不是靠節食，也不是靠意志力硬撐。</p>
+    <p>我搞清楚了一件事——<span class="highlight">身體的狀態，是生活結構的反映。</span>你先把結構改了，身體自然跟著變。</p>
+    <p>這份指南，是我把這件事怎麼做到的，完整告訴你。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ 02 為什麼身體才是真正的資產 ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="section fade-in">
+  <div class="section-num">02 &nbsp; 真正的資產清單</div>
+  <h2 class="section-title">40 歲之後，你才真正懂身體是什麼。</h2>
+  <div class="body-text">
+    <p>很多人說資產——房子、存款、投資。</p>
+    <p>但我問你：<strong>如果你的身體垮了，那些東西是誰的？</strong></p>
+    <p>房子可以增值，但你的膝蓋不會。<br>股票可以解套，但你的精力不會。<br>錢可以再賺，但你 40 歲的這副身體——<strong>沒有備份。</strong></p>
+  </div>
+
+  <div class="quote-block">
+    <p>40 歲之後你才真正懂——<br>身體能力只有一個方向。<br>你現在怎麼對待它，它就怎麼陪你走完後半場。</p>
+  </div>
+
+  <div class="body-text">
+    <p>這不是在嚇你。這是我自己走過的路。</p>
+    <p>96 公斤那時候，我什麼都有——工作、家庭、看起來還不錯的生活。但我連爬樓梯都喘。那一刻我才真正懂——<span class="highlight">所有資產的底層，是你這個人還在不在。</span></p>
+    <p>健康不是消費。是你所有計畫的地基。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ 03 21天系統 ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="section fade-in">
+  <div class="section-num">03 &nbsp; 系統怎麼運作</div>
+  <h2 class="section-title">21 天，不靠意志力的執行系統。</h2>
+  <div class="body-text">
+    <p>大多數人失敗，不是因為不努力——是因為沒有系統。</p>
+    <p>意志力是有限的。<br>但一個每天告訴你「今天做這件事」的系統，不是。</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-item">
+      <div class="flow-dot">01</div>
+      <div class="flow-content">
+        <div class="flow-title">每天一則任務私訊</div>
+        <div class="flow-desc">早上收到當天任務：今天吃什麼、今天練什麼、產品怎麼搭配。不用自己查資料，打開來照著做。</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">02</div>
+      <div class="flow-content">
+        <div class="flow-title">完整飲食計畫</div>
+        <div class="flow-desc">一週食譜和購物清單。不需要計算卡路里，不需要完全戒掉你喜歡的食物。</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">03</div>
+      <div class="flow-content">
+        <div class="flow-title">訓練菜單</div>
+        <div class="flow-desc">初階、中階、高階都有。每天 30 分鐘以內，在家就可以做。</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">04</div>
+      <div class="flow-content">
+        <div class="flow-title">頂級營養補充</div>
+        <div class="flow-desc">Herbalife 的蛋白質補充品和營養套組包含在計畫裡。Jun 自己用了快 10 年的組合。</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">05</div>
+      <div class="flow-content">
+        <div class="flow-title">Jun 一對一陪跑</div>
+        <div class="flow-desc">21 天裡你不是一個人。有問題隨時問，沒動力的時候有人推你一把。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ 04 產品 ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="section fade-in">
+  <div class="section-num">04 &nbsp; 工具這塊</div>
+  <h2 class="section-title">產品是工具，<br>不是你賣的東西。</h2>
+  <div class="body-text">
+    <p>很多人改變飲食、開始運動，但一直反彈——不是不夠努力，是生活結構沒有配合到位。</p>
+    <p>我調整了飲食節奏、搭配規律的訓練，同時加入了固定的營養補充習慣。<span class="highlight">這三件事一起做，狀態才真的穩下來。</span></p>
+    <p>Herbalife 的產品是我這套日常節奏裡的一部分——用了快 10 年，這是我自己的選擇。</p>
+  </div>
+
+  <div class="product-card">
+    <div class="product-card-title">我每天在用的配備</div>
+    <ul class="product-list">
+      <li>奶昔 — 我每天早餐的選擇，5 分鐘準備好</li>
+      <li>草本茶飲 — 我每天早上的例行習慣</li>
+      <li>蘆薈汁 — 我日常飲食的一部分</li>
+      <li>草維錠 — 我每天固定搭配的補充</li>
+      <li>細喜錠 — 我的日常選擇之一</li>
+    </ul>
+  </div>
+
+  <div class="body-text">
+    <p>我不是在告訴你這些產品有什麼效果——我是在分享我每個月固定在做的事。<span class="highlight">這是我的生活選擇，不是廣告。</span></p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ 05 如果你想把這件事變成事業 ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="section fade-in">
+  <div class="section-num">05 &nbsp; 如果你想走更遠</div>
+  <h2 class="section-title">把你的狀態，<br>變成別人想要的東西。</h2>
+  <div class="body-text">
+    <p>現在的時代不是推銷，是吸引。</p>
+    <p>你真實地記錄自己的生活——你的訓練、你的狀態、你的轉變過程——<strong>對的人自然會被你吸引過來。</strong></p>
+    <p>當一個人看完你的內容，主動找上你，問你在做什麼——那個時候你要做的事很簡單：<span class="highlight">告訴他下一步是什麼。</span></p>
+  </div>
+
+  <div class="quote-block">
+    <p>你把產品用在自己身上<br>→ 你的狀態就是最好的廣告<br>→ 用 IG 記錄過程<br>→ 對的人主動找你<br>→ 你介紹他們用同一套系統<br>→ 你從中獲得分潤<br>→ 事業就這樣建立起來</p>
+  </div>
+
+  <div class="body-text">
+    <p>不用發傳單。不用求人。不用被拒絕。這不是傳統直銷。</p>
+    <p>我跟著一對在邁阿密的夫妻學的這套方式——用內容吸引，而不是去追人。<span class="highlight">你持續提升自己，對的人自然找上門。</span></p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ 06 黃金保證 ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="section fade-in">
+  <div class="section-num">06 &nbsp; 沒有風險</div>
+  <h2 class="section-title">公司白紙黑字的保障。</h2>
+  <div class="body-text">
+    <p>我知道你可能在想——萬一不適合怎麼辦？</p>
+    <p>這幾條是 Herbalife 官方的保障，不是我說的：</p>
+  </div>
+
+  <div class="guarantee">
+    <div class="guarantee-title">Herbalife 黃金準則保障</div>
+    <ul class="guarantee-list">
+      <li>沒有最低購買金額，不需要囤貨</li>
+      <li>90 天內取消會員資格，資料盒全額退費</li>
+      <li>12 個月內未開封產品，100% 退費保障</li>
+      <li>不需要購買任何業務工具才能開始</li>
+      <li>誠實的收入揭露，不誇大承諾</li>
+    </ul>
+  </div>
+
+  <div class="body-text">
+    <p>最低的門檻是先加入優惠顧客，<strong>NT$772</strong>拿體驗組試試。試了覺得對，再決定下一步。</p>
+    <p>你不需要一開始就壓很多。時機到了你自然知道。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ CTA ══════════════════════════════ -->
+<div class="divider"></div>
+<section class="cta-section fade-in">
+  <div class="section-num" style="justify-content:center">07 &nbsp; 下一步</div>
+  <h2 class="cta-title">你準備好了嗎？</h2>
+  <p class="cta-sub">
+    看完這裡，告訴我你比較接近哪一個。<br>
+    不管哪條路，我都在這裡陪你走。
+  </p>
+
+  <div class="cta-cards">
+    <a href="https://www.myherbalife.com/zh-TW/" target="_blank" class="cta-card">
+      <div class="cta-card-label">路徑 A</div>
+      <div class="cta-card-title">先改善自己的體態</div>
+      <div class="cta-card-desc">NT$772 加入優惠顧客，拿體驗組開始。<br>引薦編號 20784137 ｜ 首字母 CHE</div>
+      <div class="cta-card-arrow">→</div>
+    </a>
+
+    <a href="https://stan.store/JunMoney/p/book-a-11-call-with-me-co95a" target="_blank" class="cta-card">
+      <div class="cta-card-label">路徑 B</div>
+      <div class="cta-card-title">同時把這個變成收入來源</div>
+      <div class="cta-card-desc">預約 15 分鐘，用講的比較快。<br>我根據你的狀況告訴你怎麼開始。</div>
+      <div class="cta-card-arrow">→</div>
+    </a>
+  </div>
+
+  <p class="cta-note">
+    不確定走哪條？回到 DM 告訴我你現在的狀況。<br>
+    沒有壓力，時機到了你自然知道。
+  </p>
+</section>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
