@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關鍵 1% 路徑指南 — Jun Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --gold: #c9a96e;
+    --gold-light: #e8d5a3;
+    --gold-dim: #8a6f3e;
+    --white: #f0ece4;
+    --grey: #888880;
+    --grey-light: #b0aca4;
+    --border: rgba(201,169,110,0.15);
+    --border-dim: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { font-family: 'Noto Serif TC', serif; line-height: 1.3; }
+
+  .gold { color: var(--gold); }
+  .grey { color: var(--grey); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .fade-up { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,169,110,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    padding: 6px 14px;
+    margin-bottom: 36px;
+    width: fit-content;
+  }
+
+  .hero-name {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--grey);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  #hero h1 {
+    font-size: clamp(2rem, 7vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    color: var(--white);
+  }
+
+  #hero h1 em { font-style: normal; color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--grey-light);
+    max-width: 480px;
+    line-height: 1.9;
+    margin-bottom: 48px;
+  }
+
+  .hero-scroll {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-dim);
+    animation: lineGrow 1s ease 1s forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 72px 24px; max-width: 640px; margin: 0 auto; }
+
+  .section-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 900;
+    margin-bottom: 32px;
+    line-height: 1.25;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border-dim);
+    margin: 0 auto;
+  }
+
+  /* ── STORY ── */
+  .story-body { display: flex; flex-direction: column; gap: 14px; margin-bottom: 8px; }
+  .story-body p { font-size: 0.95rem; color: var(--grey-light); line-height: 1.9; }
+
+  .story-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--gold-dim);
+    margin: 28px 0;
+  }
+
+  .story-quote {
+    border-left: 2px solid var(--gold);
+    padding: 20px 24px;
+    margin-top: 40px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.06), transparent);
+  }
+
+  .story-quote p {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    color: var(--white);
+    line-height: 1.8;
+  }
+
+  /* ── PATHS ── */
+  .path-card {
+    padding: 32px 28px;
+    margin-bottom: 2px;
+  }
+
+  .path-card h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .path-card p {
+    font-size: 0.92rem;
+    color: var(--grey-light);
+    line-height: 1.9;
+    margin-bottom: 14px;
+  }
+
+  .path-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .path-card ul li {
+    font-size: 0.88rem;
+    color: var(--grey-light);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .path-card ul li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* ── HOW ── */
+  #how {
+    background: var(--bg2);
+    max-width: 100%;
+    padding: 72px 24px;
+  }
+
+  #how .inner { max-width: 640px; margin: 0 auto; }
+
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .flow-steps::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 28px;
+    bottom: 28px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 24px;
+    padding: 20px 0;
+    align-items: flex-start;
+  }
+
+  .flow-dot {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    background: var(--bg2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow-text h3 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .flow-text p { font-size: 0.85rem; color: var(--grey); line-height: 1.7; }
+
+  /* ── HIGHLIGHT BLOCK ── */
+  .highlight-block {
+    border-left: 2px solid var(--gold);
+    padding: 20px 24px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.06), transparent);
+    margin: 28px 0;
+  }
+
+  .highlight-block p {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    color: var(--white);
+    line-height: 1.8;
+  }
+
+  /* ── CTA ── */
+  #cta { padding: 72px 24px; }
+
+  .cta-question {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .cta-sub {
+    text-align: center;
+    color: var(--grey);
+    font-size: 0.85rem;
+    margin-bottom: 48px;
+  }
+
+  .cta-card {
+    border: 1px solid var(--gold-dim);
+    background: linear-gradient(135deg, rgba(201,169,110,0.06), transparent);
+    padding: 32px 28px;
+    display: block;
+    text-decoration: none;
+    transition: border-color 0.25s, background 0.25s;
+    position: relative;
+  }
+
+  .cta-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,169,110,0.08);
+  }
+
+  .cta-badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 3px 10px;
+    width: fit-content;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .cta-card h3 {
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .cta-card p {
+    font-size: 0.87rem;
+    color: var(--grey-light);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    background: var(--gold);
+    color: #0a0a0a;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 16px 28px;
+    text-align: center;
+    transition: background 0.2s, opacity 0.2s;
+    border: none;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  .cta-card:hover .cta-btn {
+    opacity: 0.88;
+    background: var(--gold-light);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border-dim);
+  }
+
+  footer p { font-size: 0.75rem; color: var(--grey); letter-spacing: 0.08em; }
+  footer a { color: var(--gold-dim); text-decoration: none; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-tag fade-up">關鍵 1% 路徑指南</div>
+  <p class="hero-name fade-up delay-1">Jun Chen · @realjunchen</p>
+  <h1 class="fade-up delay-2">
+    把體態<br>
+    變成你的<em>資產</em>。
+  </h1>
+  <p class="hero-sub fade-up delay-3">
+    體態是你這輩子最不會讓你吃虧的資產。<br>
+    44歲，我還在往上走。
+  </p>
+  <div class="hero-scroll fade-up delay-4">繼續往下</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── STORY ─── -->
+<section id="story">
+  <span class="section-num reveal">我是誰</span>
+  <h2 class="section-title reveal">Hi，我是 Jun。</h2>
+
+  <div class="story-body reveal">
+    <p>今年44歲，全職爸爸，住在台灣台中。</p>
+    <p>曾經每天被工作困住，覺得無論多努力，都只是在換時間換錢——時間用完，什麼都停了。</p>
+    <p>我最重的時候 96 公斤。那不只是數字，那是一種狀態。被生活壓著，沒有精神，沒有方向，身體只是在撐著活。</p>
+  </div>
+
+  <div class="story-divider reveal"></div>
+
+  <div class="story-body reveal">
+    <p>改變不是從某一天突然發生的。</p>
+    <p>我開始認真對待自己的飲食和訓練——不是為了好看，是因為我意識到，如果連身體都管不好，其他的事也很難站穩。</p>
+    <p>現在 76 公斤。不是靠死撐，是靠找到一個能持續的節奏。</p>
+  </div>
+
+  <div class="story-divider reveal"></div>
+
+  <div class="story-body reveal">
+    <p>這兩年多，我同時在認真經營社群媒體——從零開始，帳號長到 4.8 萬，中間被平台刪過一次，重新開始，再長回來。</p>
+    <p>我慢慢發現：<strong style="color:var(--gold)">你不需要去追人——你只需要把生活過好，然後記錄下來。</strong></p>
+    <p>對的人，自己會被吸引過來。</p>
+  </div>
+
+  <div class="story-quote reveal">
+    <p>我不是在逃離生活去工作，<br>我讓工作變成我喜歡的生活。</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── TWO PATHS ─── -->
+<section id="paths">
+  <span class="section-num reveal">你適合哪一條路</span>
+  <h2 class="section-title reveal">兩種人，<br>都可以從這裡開始。</h2>
+
+  <div style="display:grid; gap: 2px; margin-top: 32px;">
+
+    <div class="path-card reveal" style="background:#141414; border-left: 2px solid rgba(201,169,110,0.4);">
+      <p style="font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:12px;">路線 01</p>
+      <h3>你只想先把體態跟狀態拉回來</h3>
+      <p>如果你最近覺得飲食失控、身體變鬆、精神變差——那可以先從 21D 體態管理開始。</p>
+      <p>21 天，每天一個任務，幫你重新整理飲食節奏、運動習慣、作息狀態。不靠意志力，靠系統。</p>
+      <p style="font-size:0.88rem; color:var(--gold-dim); font-style:italic; margin:0;">你不用一次變完美，先回到一個有精神、能掌控自己的版本。</p>
+    </div>
+
+    <div class="path-card reveal" style="background:rgba(201,169,110,0.05); border: 1px solid rgba(201,169,110,0.2);">
+      <p style="font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:12px;">路線 02</p>
+      <h3>你想體態變好，也對社群事業有興趣</h3>
+      <p>如果你不只想改變自己，也想知道怎麼把改變變成內容，用自然流量讓對的人主動找上你——我也可以帶你走這條路。</p>
+      <ul>
+        <li>把體態管理的過程變成 IG 內容</li>
+        <li>用社群建立信任，讓人主動詢問</li>
+        <li>讓你的生活本身成為最強的行銷工具</li>
+      </ul>
+      <p style="font-size:0.88rem; color:var(--gold-dim); font-style:italic; margin-top:14px; margin-bottom:0;">先從自己變好開始，再把過程變成你的事業入口。</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how">
+  <div class="inner">
+    <span class="section-num reveal">這套系統怎麼運作</span>
+    <h2 class="section-title reveal">讓生活變成<br>你的<em style="font-style:normal; color:var(--gold)">鈔能力</em>。</h2>
+
+    <p class="reveal" style="color:var(--grey-light); font-size:0.92rem; line-height:1.8; margin-bottom: 40px;">
+      核心只有一句話——<br>
+      <strong style="color:var(--white)">讓對的人主動找上你，而不是你去追人。</strong><br>
+      你要做的，是把你真實在過的生活，變成吸引人的內容。
+    </p>
+
+    <div class="flow-steps reveal">
+      <div class="flow-step">
+        <div class="flow-dot">01</div>
+        <div class="flow-text">
+          <h3>你記錄真實生活</h3>
+          <p>早餐、訓練、日常節奏、你在做的改變——拿起手機拍下來就是素材。你的生活本身，就是最強的行銷工具。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">02</div>
+        <div class="flow-text">
+          <h3>內容持續輸出，對的人被吸引進來</h3>
+          <p>他們不是被說服的——是被你的生活吸引的。內容建立信任，信任帶來行動。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">03</div>
+        <div class="flow-text">
+          <h3>自動化系統承接，不需要你守著</h3>
+          <p>有人留言、有人私訊——系統自動回應、篩選、派發資訊。你不在線的時候，系統還在工作。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">04</div>
+        <div class="flow-text">
+          <h3>每日任務系統帶著他走完21天</h3>
+          <p>進來的人每天早上收到當天任務——今天吃什麼、今天練什麼、怎麼搭配。不靠意志力，靠系統。</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">05</div>
+        <div class="flow-text">
+          <h3>他有了真實感受，漏斗自然往下走</h3>
+          <p>21天做完，狀態出來了。他不需要被說服——他自己有感受了，自然回來問下一步。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-block reveal">
+      <p>
+        你不需要去找人、說服人、推銷產品。<br>
+        <strong>你要做的只有一件事——<br>
+        專注創作，把自己的狀態和價值呈現出來。</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── DISCLOSURE ─── -->
+<section id="disclosure">
+  <span class="section-num reveal">透明說明</span>
+  <h2 class="section-title reveal">我用什麼<br>在支撐這套系統。</h2>
+
+  <div class="story-body reveal">
+    <p>事業路線使用的是我自己長期在用的 Herbalife 營養產品，搭配 21D 體態系統與我自己的社群內容方法。</p>
+    <p>我不會在這裡詳細說明制度——完整的合作方式、它適不適合你，進到社群之後我會一一說清楚。</p>
+  </div>
+
+  <div class="highlight-block reveal" style="margin-top: 32px;">
+    <p>
+      進來的人，自己決定走哪條路。<br>
+      <strong>沒有人會追你、催你、說服你。</strong><br>
+      免費的內容先拿，感覺對了再往下走。
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── CTA ─── -->
+<section id="cta">
+  <h2 class="cta-question reveal">準備好進來<br>看看了嗎？</h2>
+  <p class="cta-sub reveal">一個入口。體態跟事業，進來後你自己決定。</p>
+
+  <div class="reveal">
+    <a href="https://www.skool.com/elite-cirle-2475/about?ref=51a8d234c95448189ef7c216283ce9e3" class="cta-card" target="_blank">
+      <span class="cta-badge">唯獨精英圈 · WeDo Elite Circle</span>
+      <h3>進入唯獨精英圈</h3>
+      <p>免費的體態內容跟食譜，進來就能拿。<br>想更進一步了解事業路線的人，這裡也是起點。<br>沒有推銷，沒有私訊，你自己的節奏。</p>
+      <span class="cta-btn">免費加入 →</span>
+    </a>
+  </div>
+
+  <p class="reveal" style="text-align:center; font-size:0.8rem; color:var(--grey); margin-top:28px; line-height:1.9;">
+    社群免費加入，需通過三個簡單問題的審核。<br>
+    進來後，免費模組任何人都能看。<br>
+    體態管理 · 社群事業 · 你自己選擇的速度。
+  </p>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>© 2026 Jun Chen · <a href="https://www.instagram.com/realjunchen/" target="_blank">@realjunchen</a></p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
